@@ -1,0 +1,20 @@
+.intro-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+}
+
+.text {
+    font-size: x-large;
+    padding:1.54rem;
+}
+
+.start-btn {
+    width: 50%;
+}
+
+i {
+    font-size: .85rem;
+}

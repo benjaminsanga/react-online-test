@@ -1,15 +1,15 @@
 import React from 'react';
 import Header from '../components/header';
 import Footer from '../components/footer';
-import Intro from '../components/introText';
-import '../css/intro.css';
+import StartForm from '../components/startForm';
+import '../css/Start.css';
 
 class Start extends React.Component {
   render(){
     return (
       <div className="App">
-        <Header showSubtitle={false} />
-        <Intro />
+        <Header showSubtitle={true} />
+        <StartForm />
         <Footer />
       </div>
     );
