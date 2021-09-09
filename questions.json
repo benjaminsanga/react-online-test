@@ -1,0 +1,52 @@
+[
+	{ 
+		"question": "This is a sample question with options, pick one of the 4 options below then click on next to the next question. Click on Submit to finish the test session and see your result.",
+		"options": ["Option 1", "Option 2", "Option 3", "Option 4"],
+		"correct": 0
+	},
+	{
+		"question": "Adika ________ a message from the club regularly.",
+		"options": ["Receive", "Receives", "Has received", "Had received"],
+		"correct": 1
+	},
+	{
+		"question": "Three quarters of the people in the village ________ kill ________.",
+		"options": ["Were/was", "Were/were", "Was/was", "Was/were"],
+		"correct": 2
+	},
+	{
+		"question": "If you saw the photograph of the man, ________ you be recognise him?",
+		"options": ["Can", "Will", "Would", "Could"],
+		"correct": 2
+	},
+	{
+		"question": "It is bad to take ________ property without permission.",
+		"options": ["Someone else’s", "Someone’s else", "Someone’s else’s", "Someone elses’"],
+		"correct": 1
+	},
+	{
+		"question": "Choose the one with the different stress pattern",
+		"options": ["commit", "compare", "complete", "column"],
+		"correct": 3
+	},
+	{
+		"question": "Choose the one with the different stress pattern",
+		"options": ["apparent", "attractive", "devastate", "infections"],
+		"correct": 2
+	},
+	{
+		"question": "From the options below, choose the one that has the correct stress. Expenditure",
+		"options": ["EX-pen-di-ture", "ex-PEN-di-ture", "ex-pen-DI-ture", "ex-pen-di-TURE"],
+		"correct": 1
+	},
+	{
+		"question": "The man, as well as the woman ________, arrested",
+		"options": ["have been", "has been", "is been", "are being"],
+		"correct": 0
+	},
+	{
+		"question": "Many a ____________ to understand me",
+		"options": ["man fail", "man fails", "men fail", "men fails"],
+		"correct": 0
+	}
+]

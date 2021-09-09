@@ -1,0 +1,29 @@
+{
+  "name": "react-online-test",
+  "version": "1.0.0",
+  "description": "code for online test using react",
+  "main": "index.js",
+  "scripts": {
+    "start": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benjaminsanga/react-online-test.git"
+  },
+  "keywords": [
+    "react",
+    "test",
+    "online",
+    "exam"
+  ],
+  "author": "Benjamin Sanga",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benjaminsanga/react-online-test/issues"
+  },
+  "homepage": "https://github.com/benjaminsanga/react-online-test#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  }
+}
