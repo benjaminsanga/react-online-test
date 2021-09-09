@@ -4,6 +4,10 @@ class Intro extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            name: props.name,
+            email: props.email,
+        };
         this.handleClick = this.handleClick.bind(this);
     }
 
@@ -14,9 +18,10 @@ class Intro extends Component {
     render() {
         return (
             <div className="intro-div">
+                <p>Hello {this.state.name}</p>
                 <p className="text">
-                    The Testa app is an app I (find my twitter link at the bottom) created to 
-                    excercise my knowledge of React using an online test app. Primarily to show 
+                    The Testa app is an app I created to 
+                    exercise my knowledge of React JS using an online test app. Primarily to show 
                     recruiters/employees my proficiency.
                 </p>
                 <button onClick={this.handleClick} className="start-btn">

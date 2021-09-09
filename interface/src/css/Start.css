@@ -18,14 +18,3 @@ input {
   border-radius: 3px;
 }
 
-button {
-  padding: 0.95rem 0.71rem;
-  margin: 0.475rem 0;
-  font-size: calc(10px + 2vmin);
-  width: 100%;
-  background-color: #657dff;
-  color: #ffffff;
-  border: #657dff;
-  border-radius: 3px;
-  cursor: pointer;
-}

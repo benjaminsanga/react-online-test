@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Intro from './introText';
 
 class StartForm extends Component {
     constructor(props){
@@ -10,7 +11,7 @@ class StartForm extends Component {
         }
         this.hanldeNameChange = this.hanldeNameChange.bind(this);
         this.hanldeEmailChange = this.hanldeEmailChange.bind(this);
-        // this.handleClick = this.handleClick.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     hanldeNameChange = (e) => {
@@ -25,9 +26,15 @@ class StartForm extends Component {
         });
     }
 
-    // handleClick = (e) => {
-    //     e.preventDefault();
-    // }
+    handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(this.state.name, this.state.email);
+        <Intro name={this.state.name} email={this.state.email} />
+        this.setState({
+            name: '',
+            email: ''
+        });
+    }
 
     render() {
         return (
@@ -40,7 +47,7 @@ class StartForm extends Component {
                     <input type="email" id="email" placeholder="Email" autoComplete="off"
                             value={this.state.email} 
                             onChange={this.hanldeEmailChange}/>
-                    <button><Link to="/intro">Proceed</Link></button>
+                    <button onClick={this.handleSubmit}><Link to="/intro">Proceed</Link></button>
                 </form>
             </div>
         );
