@@ -9,7 +9,8 @@ class Question extends Component {
             questions: [],
             questionNumber: 0,
             options: [],
-            answers: {}
+            questionOptions: [],
+            answers: Array(10).fill(-1)
         };
         this.handlePrevious = this.handlePrevious.bind(this);
         this.handleNext = this.handleNext.bind(this);
@@ -26,20 +27,22 @@ class Question extends Component {
         .then(res => res.json())
         .then(data => {
             let opts = []; // populate options from dataset
+            
             let quests = data.map((item, index) => { // populate questions from dataset
                 opts.push(item.options);
                 return item.question;
             });
-
+            
             this.setState({ 
                 questions: quests,
-                options: opts
+                options: opts,
+                questionOptions: opts[0]
             });
         })
         .catch(err => console.log(err));
     }
 
-    componentDidMount(){
+    componentDidMount = () => {
         // get questions from node
         this.getQuestions();
         
@@ -55,6 +58,10 @@ class Question extends Component {
         }, 1000);
     }
 
+    componentWillUnmount = () => {
+        clearInterval(this.state.timer);
+    }
+
     time_formatting(milli_sec) {
         let minutes = Math.floor(milli_sec / 60000);
         let seconds = (milli_sec - (minutes * 60000)) / 1000;
@@ -66,15 +73,32 @@ class Question extends Component {
     handlePrevious = () => {
         if (this.state.questionNumber === 0) return
         this.setState({
-            questionNumber: this.state.questionNumber - 1
+            questionNumber: this.state.questionNumber - 1,
+            questionOptions: this.state.options[this.state.questionNumber - 1]
         });
+        
+        if (this.state.answers[this.state.questionNumber - 1] === -1) {
+            this.deselectOptions();
+        } else {
+            this.deselectOptions();
+            this.selectOption(`option_${this.state.questionNumber}`);
+        }
     }
 
     handleNext = () => {
         if (this.state.questionNumber === 9) return
         this.setState({
-            questionNumber: this.state.questionNumber + 1
-        })
+            questionNumber: this.state.questionNumber + 1,
+            questionOptions: this.state.options[this.state.questionNumber + 1]
+        });
+        
+        if (this.state.answers[this.state.questionNumber] === -1) {
+            this.deselectOptions();
+        } else {
+            this.deselectOptions();
+            this.selectOption(`option_${this.state.questionNumber + 1}`);
+        }
+        this.deselectOptions();
     }
 
     handleSubmit = () => {
@@ -82,10 +106,24 @@ class Question extends Component {
     }
 
     handleSelectOption = (e) => {
+        let answers = this.state.answers.slice();
+        answers[this.state.questionNumber] = e.target.value;
         this.setState({
-            answers: {...this.state.answers, questionNumberProperty: e.target.value }
+            answers: answers
         });
-        console.log(this.state.answers)
+        // console.log(answers);
+    }
+
+    deselectOptions = () => {
+        document.querySelector('#option_1').checked = false;
+        document.querySelector('#option_2').checked = false;
+        document.querySelector('#option_3').checked = false;
+        document.querySelector('#option_4').checked = false;
+    }
+
+    selectOption = (option) => {
+        document.querySelector(`#${option}`).checked = true;
+        console.log(option)
     }
     
     render(){
@@ -105,13 +143,13 @@ class Question extends Component {
                             <input type="radio" id="option_1" name="selectedOption"
                                     value={0} 
                                     onChange={this.handleSelectOption} />
-                            <label htmlFor="option_1">{this.state.options[this.state.questionNumber]}</label>
+                            <label htmlFor="option_1">{this.state.questionOptions[0]}</label>
                         </div>
                         <div className="option">
                             <input type="radio" id="option_2" name="selectedOption"
                                     value={1}
                                     onChange={this.handleSelectOption} />
-                            <label htmlFor="option_2">Option 2</label>
+                            <label htmlFor="option_2">{this.state.questionOptions[1]}</label>
                         </div>
                     </div>
                     <div className="group-two">
@@ -119,13 +157,13 @@ class Question extends Component {
                             <input type="radio" id="option_3" name="selectedOption"
                                     value={2}
                                     onChange={this.handleSelectOption}  />
-                            <label htmlFor="option_1">Option 3</label>
+                            <label htmlFor="option_1">{this.state.questionOptions[2]}</label>
                         </div>
                         <div className="option">
                             <input type="radio" id="option_4" name="selectedOption"
                                     value={3}
                                     onChange={this.handleSelectOption} />
-                            <label htmlFor="option_1">Option 4</label>
+                            <label htmlFor="option_1">{this.state.questionOptions[3]}</label>
                         </div>
                     </div>
                 </div>
