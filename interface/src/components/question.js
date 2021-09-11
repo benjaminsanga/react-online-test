@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import Final from '../pages/FinalScore';
 
 class Question extends Component {
     constructor(props){
@@ -10,7 +10,9 @@ class Question extends Component {
             questionNumber: 0,
             options: [],
             questionOptions: [],
-            answers: Array(10).fill(-1)
+            answers: Array(10).fill(null),
+            isSubmitted: false,
+            score: 0
         };
         this.handlePrevious = this.handlePrevious.bind(this);
         this.handleNext = this.handleNext.bind(this);
@@ -72,46 +74,63 @@ class Question extends Component {
 
     handlePrevious = () => {
         if (this.state.questionNumber === 0) return
+        
+        if (this.state.answers[this.state.questionNumber - 1] === null) {
+            this.deselectOptions();
+        } else if (this.state.answers[this.state.questionNumber - 1] !== null) {
+            // console.log(this.state.answers[this.state.questionNumber - 1])
+            this.selectOption(`option_${parseInt(this.state.answers[this.state.questionNumber - 1]) + 1}`);
+        }
+
         this.setState({
             questionNumber: this.state.questionNumber - 1,
             questionOptions: this.state.options[this.state.questionNumber - 1]
         });
-        
-        if (this.state.answers[this.state.questionNumber - 1] === -1) {
-            this.deselectOptions();
-        } else {
-            this.deselectOptions();
-            this.selectOption(`option_${this.state.questionNumber}`);
-        }
     }
 
     handleNext = () => {
         if (this.state.questionNumber === 9) return
+        
+        if (this.state.answers[this.state.questionNumber + 1] === null) {
+            this.deselectOptions();
+        } else if (this.state.answers[this.state.questionNumber + 1] !== null) {
+            this.selectOption(`option_${parseInt(this.state.answers[this.state.questionNumber + 1]) + 1}`);
+        }
+
         this.setState({
             questionNumber: this.state.questionNumber + 1,
             questionOptions: this.state.options[this.state.questionNumber + 1]
         });
-        
-        if (this.state.answers[this.state.questionNumber] === -1) {
-            this.deselectOptions();
-        } else {
-            this.deselectOptions();
-            this.selectOption(`option_${this.state.questionNumber + 1}`);
-        }
-        this.deselectOptions();
     }
 
-    handleSubmit = () => {
+    handleSubmit = async () => {
+        let answers = this.state.answers;
+        let score = await fetch('http://localhost:8000/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(answers)
+        }).then(res => res.json())
+        .then(data => {
+            return data.score;
+        })
+        .catch(err => console.log(err));
+
+        this.setState({
+            isSubmitted: true,
+            score: score
+        });
 
     }
 
     handleSelectOption = (e) => {
+        if (! /\d/.test(e.target.value)) return
         let answers = this.state.answers.slice();
-        answers[this.state.questionNumber] = e.target.value;
+        answers[this.state.questionNumber] = parseInt(e.target.value);
         this.setState({
             answers: answers
         });
-        // console.log(answers);
     }
 
     deselectOptions = () => {
@@ -122,58 +141,64 @@ class Question extends Component {
     }
 
     selectOption = (option) => {
+        // console.log(option);
+        let patt = /\d/g;
+        if (!patt.test(option)) return
         document.querySelector(`#${option}`).checked = true;
-        console.log(option)
     }
     
     render(){
-        return (
-            <div className="main">
-                <div className="name-time">
-                    <span>John Doe</span>
-                    <span>{ this.time_formatting(this.state.timer) }</span>
-                </div>
-                <h3 className="timer">{`${this.state.questionNumber+1}/${this.state.questions.length}`}</h3>
-                <p className="question-text">
-                    { this.state.questions[this.state.questionNumber] }
-                </p>
-                <div className="options">
-                    <div className="group-one">
-                        <div className="option">
-                            <input type="radio" id="option_1" name="selectedOption"
-                                    value={0} 
-                                    onChange={this.handleSelectOption} />
-                            <label htmlFor="option_1">{this.state.questionOptions[0]}</label>
+        if(this.state.isSubmitted){
+            return <Final score={this.state.score} />
+        } else {
+            return (
+                <div className="main">
+                    <div className="name-time">
+                        <span>John Doe</span>
+                        <span>{ this.time_formatting(this.state.timer) }</span>
+                    </div>
+                    <h3 className="timer">{`${this.state.questionNumber+1}/${this.state.questions.length}`}</h3>
+                    <p className="question-text">
+                        { this.state.questions[this.state.questionNumber] }
+                    </p>
+                    <div className="options">
+                        <div className="group-one">
+                            <div className="option">
+                                <input type="radio" id="option_1" name="selectedOption"
+                                        value={0} 
+                                        onChange={this.handleSelectOption} />
+                                <label htmlFor="option_1">{this.state.questionOptions[0]}</label>
+                            </div>
+                            <div className="option">
+                                <input type="radio" id="option_2" name="selectedOption"
+                                        value={1}
+                                        onChange={this.handleSelectOption} />
+                                <label htmlFor="option_2">{this.state.questionOptions[1]}</label>
+                            </div>
                         </div>
-                        <div className="option">
-                            <input type="radio" id="option_2" name="selectedOption"
-                                    value={1}
-                                    onChange={this.handleSelectOption} />
-                            <label htmlFor="option_2">{this.state.questionOptions[1]}</label>
+                        <div className="group-two">
+                            <div className="option">
+                                <input type="radio" id="option_3" name="selectedOption"
+                                        value={2}
+                                        onChange={this.handleSelectOption}  />
+                                <label htmlFor="option_1">{this.state.questionOptions[2]}</label>
+                            </div>
+                            <div className="option">
+                                <input type="radio" id="option_4" name="selectedOption"
+                                        value={3}
+                                        onChange={this.handleSelectOption} />
+                                <label htmlFor="option_1">{this.state.questionOptions[3]}</label>
+                            </div>
                         </div>
                     </div>
-                    <div className="group-two">
-                        <div className="option">
-                            <input type="radio" id="option_3" name="selectedOption"
-                                    value={2}
-                                    onChange={this.handleSelectOption}  />
-                            <label htmlFor="option_1">{this.state.questionOptions[2]}</label>
-                        </div>
-                        <div className="option">
-                            <input type="radio" id="option_4" name="selectedOption"
-                                    value={3}
-                                    onChange={this.handleSelectOption} />
-                            <label htmlFor="option_1">{this.state.questionOptions[3]}</label>
-                        </div>
+                    <div className="action-buttons">
+                        <button onClick={this.handlePrevious}> Previous </button>
+                        <button onClick={this.handleNext}> Next </button>
+                        <button onClick={this.handleSubmit}> Submit </button>
                     </div>
                 </div>
-                <div className="action-buttons">
-                    <button onClick={this.handlePrevious}> Previous </button>
-                    <button onClick={this.handleNext}> Next </button>
-                    <button onClick={this.handleSubmit}><Link to="/final"> Submit </Link></button>
-                </div>
-            </div>
-        );
+            );
+        }
     }
 }
 
