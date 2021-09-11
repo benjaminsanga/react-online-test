@@ -14,7 +14,11 @@ class Final extends React.Component {
                     <span>Your score</span>
                     <h2>{this.props.score}/10</h2>
                 </div>
-                <h3>Congratulations!!!</h3>
+                <h3>
+                    {this.props.score >= 8 && `High Score!!!` }
+                    {this.props.score >= 5 && this.props.score < 8 && `Mid Score!!` }
+                    {this.props.score < 5 && `You can do better!` }
+                </h3>
             </div>
         );
     }
