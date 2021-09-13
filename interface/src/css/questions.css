@@ -59,5 +59,28 @@ label {
     justify-content: space-evenly;
 }
 
+@media only screen and (max-width: 600px) {
+    .question-text {
+        height: 20vh;
+        font-size: 1.2rem;
+    }
 
+    .options {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        padding: 0px;
+    }
+    
+    label {
+        font-size: 1rem;
+        vertical-align: middle;
+    }
+    
+    input[type=radio] {
+        font-size: 2rem;
+        width: 1.8rem;
+        height: 2vh;
+    }
+}
 

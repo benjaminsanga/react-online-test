@@ -7,7 +7,7 @@ import '../css/intro.css';
 class Start extends React.Component {
   render(){
     return (
-      <div className="App">
+      <div>
         <Header showSubtitle={false} />
         <Intro />
         <Footer />

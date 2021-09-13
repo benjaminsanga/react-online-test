@@ -7,7 +7,7 @@ import '../css/questions.css';
 class Questions extends React.Component {
   render(){
     return (
-      <div className="App">
+      <div>
         <Header showSubtitle={false} />
         <Question />
         <Footer />

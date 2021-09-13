@@ -2,25 +2,37 @@ import React, { Component } from 'react';
 import Final from '../pages/FinalScore';
 
 class Question extends Component {
+
     constructor(props){
         super(props);
+
+        // define state
         this.state = {
+            // set name and email from Intro page
+            name: props.name,
+            email: props.email,
+
+            // initialize state variables
             timer: 600000,
             questions: [],
-            questionNumber: 0,
+            questionNumber: 0, // question numbers start from zero for array indexing purpose
             options: [],
             questionOptions: [],
             answers: Array(10).fill(null),
             isSubmitted: false,
             score: 0
         };
+
+        // bind functions
         this.handlePrevious = this.handlePrevious.bind(this);
         this.handleNext = this.handleNext.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleSelectOption = this.handleSelectOption.bind(this);
     }
 
+    // initial call to fetch questions
     getQuestions() {
+        // fetch from backend endpoint
         fetch('http://localhost:8000/getQuestions', {
             headers: {
                 'Content-Type': 'application/json'
@@ -28,60 +40,86 @@ class Question extends Component {
         })
         .then(res => res.json())
         .then(data => {
-            let opts = []; // populate options from dataset
+
+            // set initial options to empty array
+            let opts = [];
             
-            let quests = data.map((item, index) => { // populate questions from dataset
-                opts.push(item.options);
+            // questions and options are in the same dataset, we populate the datasets seperately
+            // populate questions from dataset
+            let quests = data.map((item, index) => { 
+                opts.push(item.options); // populate options from dataset
                 return item.question;
             });
             
+            // set state to fetched questions and options, form local variables
             this.setState({ 
                 questions: quests,
                 options: opts,
                 questionOptions: opts[0]
             });
+
         })
         .catch(err => console.log(err));
     }
 
+    // set initial values and timer interval when component mounts
     componentDidMount = () => {
         // get questions from node
         this.getQuestions();
         
         // set timer countdown
         setInterval(() => {
+
+            // clear interval if timer is zero
             if (this.state.timer === 0) {
                 clearInterval(this.state.timer);
+
+                // set isSubmitted state to true, to submit
+                this.setState({ isSubmitted: true });
+
                 return;
             } 
+            
+            // change value of state by -1 second
             this.setState({
                 timer: this.state.timer - 1000,
             });
         }, 1000);
     }
 
+    // clear interval if component is unmounting
     componentWillUnmount = () => {
         clearInterval(this.state.timer);
     }
 
     time_formatting(milli_sec) {
+
+        // calculate minutes and seconds from timer milli seconds
         let minutes = Math.floor(milli_sec / 60000);
         let seconds = (milli_sec - (minutes * 60000)) / 1000;
         minutes = minutes < 10 ? "0"+minutes : minutes;
         seconds = seconds < 10 ? "0"+seconds : seconds;
+
+        // return timer in minutes and seconds format
         return minutes+":"+seconds;
     }
 
+    // handle the previous question selection button
     handlePrevious = () => {
+        
+        // return if on question one
         if (this.state.questionNumber === 0) return
         
         if (this.state.answers[this.state.questionNumber - 1] === null) {
+            // clear radio button options selection
             this.deselectOptions();
         } else if (this.state.answers[this.state.questionNumber - 1] !== null) {
-            // console.log(this.state.answers[this.state.questionNumber - 1])
+            // set the previously selected option for this question
             this.selectOption(`option_${parseInt(this.state.answers[this.state.questionNumber - 1]) + 1}`);
         }
 
+        // decrease question number
+        // set selected option for this question
         this.setState({
             questionNumber: this.state.questionNumber - 1,
             questionOptions: this.state.options[this.state.questionNumber - 1]
@@ -89,22 +127,34 @@ class Question extends Component {
     }
 
     handleNext = () => {
+
+        // return if on question 10
         if (this.state.questionNumber === 9) return
         
         if (this.state.answers[this.state.questionNumber + 1] === null) {
+            // clear radio button options selection
             this.deselectOptions();
         } else if (this.state.answers[this.state.questionNumber + 1] !== null) {
+            // set the previously selected option for this question
             this.selectOption(`option_${parseInt(this.state.answers[this.state.questionNumber + 1]) + 1}`);
         }
 
+        // decrease question number
+        // set selected option for this question
         this.setState({
             questionNumber: this.state.questionNumber + 1,
             questionOptions: this.state.options[this.state.questionNumber + 1]
         });
     }
 
+    // handle submission
     handleSubmit = async () => {
         let answers = this.state.answers;
+        
+        // stop timer
+        clearInterval(this.state.timer);
+        
+        // submit answers to backend endpoint
         let score = await fetch('http://localhost:8000/submit', {
             method: 'POST',
             headers: {
@@ -113,10 +163,12 @@ class Question extends Component {
             body: JSON.stringify(answers)
         }).then(res => res.json())
         .then(data => {
+            // return score from endpoint
             return data.score;
         })
         .catch(err => console.log(err));
 
+        // set submission and score states
         this.setState({
             isSubmitted: true,
             score: score
@@ -124,15 +176,25 @@ class Question extends Component {
 
     }
 
+    // set selected option
     handleSelectOption = (e) => {
+
+        // return if the values doesn't contain an option number
         if (! /\d/.test(e.target.value)) return
+
+        // make a copy of answers
         let answers = this.state.answers.slice();
+
+        // and selected answer to state answers
         answers[this.state.questionNumber] = parseInt(e.target.value);
+
+        // change answers state
         this.setState({
             answers: answers
         });
     }
 
+    // for removing all options selection
     deselectOptions = () => {
         document.querySelector('#option_1').checked = false;
         document.querySelector('#option_2').checked = false;
@@ -140,21 +202,26 @@ class Question extends Component {
         document.querySelector('#option_4').checked = false;
     }
 
+    // set a previously selected and saved option to it's state
     selectOption = (option) => {
-        // console.log(option);
         let patt = /\d/g;
         if (!patt.test(option)) return
         document.querySelector(`#${option}`).checked = true;
     }
     
     render(){
+        // show final score if submitted
         if(this.state.isSubmitted){
-            return <Final score={this.state.score} />
+            return <Final 
+                        name={this.state.name} 
+                        email={this.state.email} 
+                        score={this.state.score} />
         } else {
+            // show questions if not submitted
             return (
                 <div className="main">
                     <div className="name-time">
-                        <span>John Doe</span>
+                        <span>Goodluck, {this.state.name}!</span>
                         <span>{ this.time_formatting(this.state.timer) }</span>
                     </div>
                     <h3 className="timer">{`${this.state.questionNumber+1}/${this.state.questions.length}`}</h3>

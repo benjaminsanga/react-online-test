@@ -8,7 +8,7 @@ class Start extends React.Component {
   render(){
     return (
       <div className="App">
-        <Header showSubtitle={true} />
+        <Header showSubtitle={false} />
         <StartForm />
         <Footer />
       </div>

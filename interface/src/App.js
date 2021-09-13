@@ -8,6 +8,7 @@ import Final from './pages/FinalScore';
 
 class App extends React.Component {
     render(){
+        // return directories for navigating app major pages
         return (
             <BrowserRouter>
                 <React.Fragment>
