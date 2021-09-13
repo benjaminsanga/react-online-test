@@ -17,7 +17,7 @@ const PORT = 8000;
 
 app.get('/getQuestions', (req, res) => {
     // read questions from file
-    fs.readFile('./questions.json', (err, questions) => {
+    fs.readFile('./files/questions.json', (err, questions) => {
         if (err) throw err;
 
         // send json parsed questions object to client
@@ -32,7 +32,7 @@ app.post('/submit', (req, res) => {
     let user_answers = req.body;
 
     // read answers from file
-    fs.readFile('./answers.json', (err, answers_data) => {
+    fs.readFile('./files/answers.json', (err, answers_data) => {
         if (err) throw err;
 
         // parse answers object from file
