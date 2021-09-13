@@ -8,7 +8,7 @@ class Header extends Component {
                 <h1><a href="/">Testa</a></h1>
                 {this.props.showSubtitle && 
                 <p>
-                    Test your knowledge. This is created to simulate online test.
+                    Test your knowledge. This is created for online test.
                 </p>}
             </header>
         );

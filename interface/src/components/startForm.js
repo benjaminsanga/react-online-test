@@ -33,15 +33,25 @@ class StartForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+
+        // set borders to red if fields are empty
+        if (this.state.name !== "") { 
+            document.getElementById('name').style.borderBottom = "3px solid forestgreen";
+        }
+        if (this.validateEmail(this.state.email)) {
+            document.getElementById('email').style.borderBottom = "3px solid forestgreen";
+        }
+        if (this.state.name === "") { 
+            document.getElementById('name').style.borderBottom = "3px solid chocolate";
+        }
+        if (!this.validateEmail(this.state.email)) {
+            document.getElementById('email').style.borderBottom = "3px solid chocolate";
+        }
         
         let valid = false;
 
-        if(this.state.name !== "" && this.state.email !== "" ) {
+        if(this.state.name !== "" && this.validateEmail(this.state.email) ) {
             valid = true;
-        } else {
-            // set borders to red if fields are empty
-            document.getElementById('name').style.borderColor = "red";
-            document.getElementById('email').style.borderColor = "red";
         }
         
         // change state to go to the next page
@@ -50,12 +60,18 @@ class StartForm extends Component {
         });
     }
 
+    validateEmail = (email) => {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
     render() {
         if (this.state.isRegistered){
             return <Intro name={this.state.name} email={this.state.email} />
         } else {
             return (
                 <div>
+                    <h5>...for online test.</h5>
                     <p>Fill in to proceed</p>
                     <form>
                         <input type="text" id="name" placeholder="Name" autoComplete="off" 
