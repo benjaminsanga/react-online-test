@@ -8,8 +8,8 @@
 }
 
 .text {
-    font-size: x-large;
-    padding:1.54rem;
+    font-size: large;
+    padding:0.54rem;
 }
 
 .start-btn {
@@ -18,4 +18,14 @@
 
 i {
     font-size: .85rem;
+}
+
+@media only screen and (max-width: 600px) {
+    .App {
+        padding: 0 1.25rem;
+    }
+
+    .intro-div {
+        padding: 0;
+    }
 }

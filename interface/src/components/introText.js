@@ -31,19 +31,22 @@ class Intro extends Component {
     };
 
     render() {
+        
+        // display question component with conditions
         if (this.state.isStarted && this.state.verified) {
             return <Question name={this.state.name} email={this.state.email} />
         }
+
         return (
             <div className="intro-div">
-                <p>Hello {this.state.name.charAt(0).toUpperCase() + this.state.name.slice(1)}</p>
+                <h4>Hello {this.state.name.charAt(0).toUpperCase() + this.state.name.slice(1)}</h4>
                 <p className="text">
-                    The Testa app is an app I created to 
-                    exercise my knowledge of React JS using an online test app. Primarily to show 
-                    recruiters/employees my proficiency.
+                    Welcome to Testa! Where you answer some questions as a simple test. 
+                    It was created for practice, mine and yours. 
+                    Hope you enjoy and share this piece of Open Source project :)
                 </p>
                 <button onClick={this.handleClick} className="start-btn">Start Test</button>
-                <i>This will take you to the questions page!</i>
+                <i style={{marginTop: "0.5rem"}}>This will start the Questions and Timer!</i>
             </div>
         );
     }

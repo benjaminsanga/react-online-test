@@ -68,14 +68,34 @@ class Question extends Component {
         this.getQuestions();
         
         // set timer countdown
-        setInterval(() => {
+        setInterval(async () => {
 
             // clear interval if timer is zero
-            if (this.state.timer === 0) {
+            if (this.state.timer <= 0) {
+                // stop timer
                 clearInterval(this.state.timer);
 
-                // set isSubmitted state to true, to submit
-                this.setState({ isSubmitted: true });
+                let answers = this.state.answers;        
+                
+                // submit answers to backend endpoint
+                let score = await fetch('http://localhost:8000/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(answers)
+                }).then(res => res.json())
+                .then(data => {
+                    // return score from endpoint
+                    return data.score;
+                })
+                .catch(err => console.log(err));
+
+                // set submission and score states
+                this.setState({
+                    isSubmitted: true,
+                    score: score
+                });
 
                 return;
             } 
@@ -93,6 +113,10 @@ class Question extends Component {
     }
 
     time_formatting(milli_sec) {
+
+        if (milli_sec <= 60000) {
+            document.getElementById('timer').style.color = "#ffa436";
+        }
 
         // calculate minutes and seconds from timer milli seconds
         let minutes = Math.floor(milli_sec / 60000);
@@ -221,10 +245,10 @@ class Question extends Component {
             return (
                 <div className="main">
                     <div className="name-time">
-                        <span>Goodluck, {this.state.name}!</span>
-                        <span>{ this.time_formatting(this.state.timer) }</span>
+                        <span>Goodluck, {this.state.name.charAt(0).toUpperCase() + this.state.name.slice(1)}!</span>
+                        <span id="timer">{ this.time_formatting(this.state.timer) }</span>
                     </div>
-                    <h3 className="timer">{`${this.state.questionNumber+1}/${this.state.questions.length}`}</h3>
+                    <h3 className="question_no">Question: {`${this.state.questionNumber+1} of ${this.state.questions.length}`}</h3>
                     <p className="question-text">
                         { this.state.questions[this.state.questionNumber] }
                     </p>
