@@ -46,7 +46,7 @@ class Intro extends Component {
                     Hope you enjoy and share this piece of Open Source project :)
                 </p>
                 <button onClick={this.handleClick} className="start-btn">Start Test</button>
-                <i style={{marginTop: "0.5rem"}}>This will start the Questions and Timer!</i>
+                <i style={{marginTop: "0.5rem", color: "#ffb825"}}>This will start the Questions and Timer!</i>
             </div>
         );
     }

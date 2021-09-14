@@ -20,12 +20,14 @@ class StartForm extends Component {
     }
 
     hanldeNameChange = (e) => {
+        // update state to name field
         this.setState({
             name: e.target.value,
         });
     };
 
     hanldeEmailChange = (e) => {
+        // update state to email field
         this.setState({
             email: e.target.value,
         });
@@ -34,13 +36,15 @@ class StartForm extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        // set borders to red if fields are empty
+        // set borders to greenish if not valid
         if (this.state.name !== "") { 
             document.getElementById('name').style.borderBottom = "3px solid forestgreen";
         }
         if (this.validateEmail(this.state.email)) {
             document.getElementById('email').style.borderBottom = "3px solid forestgreen";
         }
+
+        // set borders to redish if invalid
         if (this.state.name === "") { 
             document.getElementById('name').style.borderBottom = "3px solid chocolate";
         }
@@ -48,9 +52,11 @@ class StartForm extends Component {
             document.getElementById('email').style.borderBottom = "3px solid chocolate";
         }
         
+        // init validation to false
         let valid = false;
 
         if(this.state.name !== "" && this.validateEmail(this.state.email) ) {
+            // if validation is true
             valid = true;
         }
         
@@ -61,17 +67,19 @@ class StartForm extends Component {
     }
 
     validateEmail = (email) => {
+        // text email against regex
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
     }
 
     render() {
+        // return intro if registered
         if (this.state.isRegistered){
             return <Intro name={this.state.name} email={this.state.email} />
         } else {
             return (
                 <div>
-                    <h5>...for online test.</h5>
+                    <h5><i>For online test.</i></h5>
                     <p>Fill in to proceed</p>
                     <form>
                         <input type="text" id="name" placeholder="Name" autoComplete="off" 
