@@ -13,7 +13,7 @@ class Question extends Component {
             email: props.email,
 
             // initialize state variables
-            timer: 600000,
+            timer: 180000,
             questions: [],
             questionNumber: 0, // question numbers start from zero for array indexing purpose
             options: [],
