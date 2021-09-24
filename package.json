@@ -4,7 +4,10 @@
   "description": "code for online test using react",
   "main": "index.js",
   "scripts": {
-    "start": "index.js"
+    "build": "cd interface && npm run build",
+    "install-interface": "cd interface && npm install",
+    "heroku-postbuild": "npm run install-interface && npm run build",
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +27,7 @@
   "homepage": "https://github.com/benjaminsanga/react-online-test#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "nodemon": "^2.0.13"
   }
 }
