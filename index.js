@@ -13,7 +13,7 @@ app.use(
   
 app.use(express.json())
 
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
 app.get('/getQuestions', (req, res) => {
     // read questions from file
