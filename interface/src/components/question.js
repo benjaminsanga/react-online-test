@@ -5,7 +5,9 @@ class Question extends Component {
 
     constructor(props){
         super(props);
-
+        
+        const URL = window.location.href;
+              
         // define state
         this.state = {
             // set name and email from Intro page
@@ -78,7 +80,8 @@ class Question extends Component {
                 let answers = this.state.answers;        
                 
                 // submit answers to backend endpoint
-                let score = await fetch('http://localhost:8000/submit', {
+                
+                let score = await fetch(`${this.URL}/submit`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -179,7 +182,7 @@ class Question extends Component {
         clearInterval(this.state.timer);
         
         // submit answers to backend endpoint
-        let score = await fetch('http://localhost:8000/submit', {
+        let score = await fetch(`${this.URL}/submit`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
