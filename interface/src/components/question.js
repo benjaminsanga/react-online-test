@@ -6,8 +6,6 @@ class Question extends Component {
     constructor(props){
         super(props);
         
-        const URL = window.location.href;
-              
         // define state
         this.state = {
             // set name and email from Intro page
@@ -35,7 +33,7 @@ class Question extends Component {
     // initial call to fetch questions
     getQuestions() {
         // fetch from backend endpoint
-        fetch('http://localhost:8000/getQuestions', {
+        fetch('https://testa-webapp.herokuapp.com/getQuestions', {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -81,7 +79,7 @@ class Question extends Component {
                 
                 // submit answers to backend endpoint
                 
-                let score = await fetch(`${this.URL}/submit`, {
+                let score = await fetch(`https://testa-webapp.herokuapp.com/submit`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -182,7 +180,7 @@ class Question extends Component {
         clearInterval(this.state.timer);
         
         // submit answers to backend endpoint
-        let score = await fetch(`${this.URL}/submit`, {
+        let score = await fetch(`https://testa-webapp.herokuapp.com/submit`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
