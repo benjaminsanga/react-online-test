@@ -18,8 +18,8 @@ class Final extends React.Component {
                     {this.props.score >= 5 && this.props.score < 8 && `Mid Score!!` }
                     {this.props.score < 5 && `You can do better!` }
                 </h3>
-                <span>Find it at {this.props.email}</span>
-                <p>You can <a href="/" style={{fontWeight: "bolder"}}>Retake</a> the test. Or click on 'Testa'</p>
+                <span>Check {this.props.email} for your result.</span>
+                <p>You can <a href="/" style={{fontWeight: "bolder"}}>Retake</a> the test. Or click on 'Testa' above.</p>
             </div>
         );
     }

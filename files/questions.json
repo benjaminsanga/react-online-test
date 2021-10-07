@@ -1,6 +1,6 @@
 [
 	{ 
-		"question": "This is a sample question, choose Option 1 below, and use the Next, Back, Submit buttons to navigate. Click on Submit to end the test.",
+		"question": "This is a sample question, choose Option 1 below, and use the Next, and Back buttons to navigate. Click on Submit to end the test.",
 		"options": ["Option 1", "Option 2", "Option 3", "Option 4"]
 	},
 	{
