@@ -65,7 +65,7 @@ label {
 
 @media only screen and (max-width: 600px) {
     .question-text {
-        height: 15vh; /* inherit */
+        height: inherit;
         font-size: 1.2rem;
     }
 

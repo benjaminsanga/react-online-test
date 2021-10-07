@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Final from '../pages/FinalScore';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 class Question extends Component {
 
@@ -20,8 +22,11 @@ class Question extends Component {
             questionOptions: [],
             answers: Array(10).fill(null),
             isSubmitted: false,
-            score: 0
+            score: 0,
+            show: false
         };
+
+        
 
         // bind functions
         this.handlePrevious = this.handlePrevious.bind(this);
@@ -29,6 +34,15 @@ class Question extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleSelectOption = this.handleSelectOption.bind(this);
     }
+
+    // Prompt() {
+    //     // const [show, setShow] = useState(false);
+        
+      
+    //     return (
+          
+    //     );
+    //   }
 
     // initial call to fetch questions
     getQuestions() {
@@ -235,6 +249,25 @@ class Question extends Component {
     }
     
     render(){
+        const customStyle = {
+            textColor: { color: '#000' },
+            submitButtonColor: { backgroundColor: '#0d213d', color: '#fff', borderColor: '#fff'},
+            button: {
+            padding: "1rem 0.525rem",
+            margin: "0.25rem",
+            fontSize: "calc(10px + 2vmin)",
+            width: "100%",
+            backgroundColor: "#657dff",
+            color: "#ffffff",
+            border: "#657dff",
+            borderRadius: "3px",
+            cursor: "pointer",
+            }
+        }
+      
+        const handleClose = () => this.setState({show: false});
+        const handleShow = () => this.setState({show: true});
+
         // show final score if submitted
         if(this.state.isSubmitted){
             return <Final 
@@ -286,8 +319,36 @@ class Question extends Component {
                     <div className="action-buttons">
                         <button onClick={this.handlePrevious}> Previous </button>
                         <button onClick={this.handleNext}> Next </button>
-                        <button onClick={this.handleSubmit}> Submit </button>
+                        <>
+                            <Button onClick={handleShow} style={customStyle.button}>
+                            Submit
+                            </Button>
+                    
+                            <Modal
+                            show={this.state.show}
+                            onHide={handleClose}
+                            backdrop="static"
+                            keyboard={false}
+                            >
+                            <Modal.Header closeButton>
+                                <Modal.Title style={customStyle.textColor}>Confirm Submit</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body style={customStyle.textColor}>
+                                Please click on the Confirm button to submit. Or Cancel button if this was 
+                                a mistake.
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose}>
+                                Cancel
+                                </Button>
+                                <Button style={customStyle.submitButtonColor} onClick={this.handleSubmit}>Confirm</Button>
+                            </Modal.Footer>
+                            </Modal>
+                        </>
+                        {/* <button onClick={this.handleSubmit}> Submit </button> */}
                     </div>
+
+                    
                 </div>
             );
         }

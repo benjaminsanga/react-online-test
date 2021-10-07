@@ -1,6 +1,6 @@
 [
 	{ 
-		"question": "This is a sample question with options, pick one of the 4 options below then click on next to the next question. Click on Submit to finish the test session and see your result.",
+		"question": "This is a sample question, choose Option 1 below, and use the Next, Back, Submit buttons to navigate. Click on Submit to end the test.",
 		"options": ["Option 1", "Option 2", "Option 3", "Option 4"]
 	},
 	{
@@ -12,7 +12,7 @@
 		"options": ["Were/was", "Were/were", "Was/was", "Was/were"]
 	},
 	{
-		"question": "If you saw the photograph of the man, ________ you be recognise him?",
+		"question": "If you saw the photograph of the man, ________ you recognise him?",
 		"options": ["Can", "Will", "Would", "Could"]
 	},
 	{
@@ -20,23 +20,23 @@
 		"options": ["Someone else’s", "Someone’s else", "Someone’s else’s", "Someone elses’"]
 	},
 	{
-		"question": "Choose the one with the different stress pattern",
-		"options": ["commit", "compare", "complete", "column"]
+		"question": "Choose the one with the different stress pattern.",
+		"options": ["Commit", "Compare", "Complete", "Column"]
 	},
 	{
-		"question": "Choose the one with the different stress pattern",
-		"options": ["apparent", "attractive", "devastate", "infections"]
+		"question": "Choose the one with the different stress pattern.",
+		"options": ["Apparent", "Attractive", "Devastate", "Infections"]
 	},
 	{
-		"question": "From the options below, choose the one that has the correct stress. Expenditure",
+		"question": "From the options below, choose the one that has the correct stress.",
 		"options": ["EX-pen-di-ture", "ex-PEN-di-ture", "ex-pen-DI-ture", "ex-pen-di-TURE"]
 	},
 	{
-		"question": "The man, as well as the woman ________, arrested",
+		"question": "The man, as well as the woman ________ arrested.",
 		"options": ["have been", "has been", "is been", "are being"]
 	},
 	{
-		"question": "Many a ____________ to understand me",
+		"question": "Many a ____________ to understand me.",
 		"options": ["man fail", "man fails", "men fail", "men fails"]
 	}
 ]
