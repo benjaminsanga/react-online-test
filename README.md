@@ -1,4 +1,4 @@
-# react-online-test
+# Test
 
 ## a sample react code for taking online test
 
