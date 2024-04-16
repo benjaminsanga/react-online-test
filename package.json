@@ -4,10 +4,8 @@
   "description": "code for online test using react",
   "main": "index.js",
   "scripts": {
-    "build": "cd interface && npm run build",
-    "install-interface": "cd interface && npm install",
-    "heroku-postbuild": "npm run install-interface && npm run build",
-    "start": "nodemon index.js"
+    "start": "node index.js",
+    "start-dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
